@@ -1,0 +1,271 @@
+<html><head><base href="https://example.com">
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(45deg, #87CEEB, #4682B4);
+    overflow: hidden;
+}
+
+.login-container {
+    background: rgba(70, 130, 180, 0.95);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 8px 24px rgba(135, 206, 235, 0.3);
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.rainbow-border {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        45deg,
+        red,
+        orange,
+        yellow,
+        green,
+        blue,
+        indigo,
+        violet
+    );
+    opacity: 0.3;
+    animation: borderRotate 3s linear infinite;
+    z-index: -1;
+}
+
+@keyframes borderRotate {
+    0% {
+        filter: hue-rotate(0deg);
+    }
+    100% {
+        filter: hue-rotate(360deg);
+    }
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: white;
+    font-weight: 500;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid #e1e1e1;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #87CEEB;
+}
+
+.login-btn {
+    width: 100%;
+    padding: 1rem;
+    background: #87CEEB;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.3s ease;
+}
+
+.login-btn:hover {
+    background: #5F9EA0;
+    transform: translateY(-2px);
+}
+
+.login-btn:active {
+    transform: translateY(0);
+}
+
+.forgot-password {
+    text-align: right;
+    margin-top: 1rem;
+}
+
+.forgot-password a {
+    color: white;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.signup-link {
+    text-align: center;
+    margin-top: 1.5rem;
+    color: white;
+}
+
+.signup-link a {
+    color: #87CEEB;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.floating-clouds {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.cloud {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50px;
+    animation: float 12s infinite ease-in-out;
+}
+
+.cloud:nth-child(1) {
+    width: 120px;
+    height: 40px;
+    top: -20px;
+    left: -60px;
+    animation-delay: 0s;
+}
+
+.cloud:nth-child(2) {
+    width: 100px;
+    height: 35px;
+    bottom: -20px;
+    right: -50px;
+    animation-delay: 2s;
+}
+
+.falling-cloud {
+    position: fixed;
+    width: 60px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 25px;
+    animation: fall linear infinite;
+    z-index: 0;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0) translateX(0);
+    }
+    50% {
+        transform: translateY(-15px) translateX(15px);
+    }
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(-100vh) translateX(0);
+    }
+    100% {
+        transform: translateY(100vh) translateX(0);
+    }
+}
+</style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="rainbow-border"></div>
+        <div class="floating-clouds">
+            <div class="cloud"></div>
+            <div class="cloud"></div>
+        </div>
+        
+        <h2 style="text-align: center; margin-bottom: 2rem; color: white;">Welcome Back</h2>
+        
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" required placeholder="Enter your email">
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" required placeholder="Enter your password">
+            </div>
+            
+            <button type="submit" class="login-btn">Log In</button>
+            
+            <div class="forgot-password">
+                <a href="https://example.com/forgot-password">Forgot Password?</a>
+            </div>
+            
+            <div class="signup-link">
+                Don't have an account? <a href="https://example.com/signup">Sign up</a>
+            </div>
+        </form>
+    </div>
+
+    <script>
+    // Create falling clouds
+    function createFallingCloud() {
+        const cloud = document.createElement('div');
+        cloud.className = 'falling-cloud';
+        cloud.style.left = Math.random() * 100 + 'vw';
+        cloud.style.animationDuration = (Math.random() * 3 + 2) + 's';
+        document.body.appendChild(cloud);
+
+        // Remove cloud after animation
+        cloud.addEventListener('animationend', () => {
+            cloud.remove();
+        });
+    }
+
+    // Create clouds periodically
+    setInterval(createFallingCloud, 500);
+
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        
+        // Here you would typically send this data to your server
+        console.log('Login attempt:', { email, password });
+        
+        // Example validation
+        if (email && password) {
+            const loginBtn = document.querySelector('.login-btn');
+            loginBtn.innerHTML = 'Logging in...';
+            loginBtn.disabled = true;
+            
+            // Simulate API call
+            setTimeout(() => {
+                loginBtn.innerHTML = 'Success!';
+                loginBtn.style.background = '#4CAF50';
+                
+                // Redirect after successful login
+                setTimeout(() => {
+                    window.location.href = 'https://example.com/dashboard';
+                }, 1000);
+            }, 1500);
+        }
+    });
+    </script>
+</body>
+</html>
